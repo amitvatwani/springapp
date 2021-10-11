@@ -2,10 +2,12 @@ package com.examly.springapp.model;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.JoinColumn;
+import java.io.Serializable;
 import java.util.*;
 import javax.persistence.CascadeType;
 @Entity
-public class UserModel {
+public class UserModel implements Serializable{
     @Id
     @GeneratedValue(generator="uuid")
     @GenericGenerator(name="uuid", strategy="uuid2")
@@ -19,6 +21,7 @@ public class UserModel {
     private String role;
     
     @ManyToOne
+    @JoinColumn(name="like_id", nullable=false)
     private LikeModel like; 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -26,7 +29,7 @@ public class UserModel {
         joinColumns = { @JoinColumn(name = "userid") }, 
         inverseJoinColumns = { @JoinColumn(name = "musicId") }
     )
-    private List<MusicModel> playlist;
+    private Set<MusicModel> playlist;
     
     
 
@@ -34,7 +37,7 @@ public class UserModel {
 
     }
 
-    public UserModel(String id, String email, String password, String username, String mobileNumber, Boolean active, String role, LikeModel like, List<MusicModel> playlist) {
+    public UserModel(String id, String email, String password, String username, String mobileNumber, Boolean active, String role, LikeModel like, Set<MusicModel> playlist) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -103,11 +106,11 @@ public class UserModel {
     public void setRole(String role) {
         this.role = role;
     }
-    public List<MusicModel> getPlaylist() {
+    public Set<MusicModel> getPlaylist() {
         return playlist;
     }
 
-    public void setPlaylist(List<MusicModel> playlist) {
+    public void setPlaylist(Set<MusicModel> playlist) {
         this.playlist = playlist;
     }
 }

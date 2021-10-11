@@ -38,6 +38,12 @@ public class MusicController {
         return musicList;
     }
 
+    @GetMapping("/admin/music/{id}")
+    public MusicModel getMusicById(@PathVariable(value="id") String id){
+        MusicModel music = musicService.findById(id);
+        return music;
+    }
+
     @GetMapping("/music")
     public List<MusicModel> getAllMovieList(){
         List<MusicModel> musicList = musicService.allMusic();

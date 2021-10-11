@@ -24,7 +24,7 @@ public class MusicModel {
     private List<UserModel> user;
     
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private LikeModel like;
     
     
@@ -33,7 +33,7 @@ public class MusicModel {
 
     }
 
-    public MusicModel(String musicId, String musicName, String musicPosterUrl, String musicUrl, String musicAlbum, String musicArtist, LikeModel like, List<UserModel> user) {
+    public MusicModel(String musicId, String musicName, String musicPosterUrl, String musicUrl, String musicAlbum, String musicArtist, LikeModel like) {
         this.musicId = musicId;
         this.musicName = musicName;
         this.musicPosterUrl = musicPosterUrl;
@@ -41,7 +41,7 @@ public class MusicModel {
         this.musicAlbum = musicAlbum;
         this.musicArtist = musicArtist;
         this.like = like;
-        this.user = user;
+
     }
 
     public String getMusicId() {
@@ -98,9 +98,6 @@ public class MusicModel {
 
     public void setLike(LikeModel like) {
         this.like = like;
-    }
-    public List<UserModel> getUser() {
-        return user;
     }
 
     public void setUser(List<UserModel> user) {

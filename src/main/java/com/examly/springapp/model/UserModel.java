@@ -8,6 +8,7 @@ import java.util.*;
 import javax.persistence.CascadeType;
 @Entity
 public class UserModel implements Serializable{
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(generator="uuid")
     @GenericGenerator(name="uuid", strategy="uuid2")
@@ -20,9 +21,8 @@ public class UserModel implements Serializable{
     private Boolean active=false;
     private String role;
     
-    @ManyToOne
-    @JoinColumn(name="like_id", nullable=false)
-    private LikeModel like; 
+    @ManyToMany(mappedBy = "likedUser")
+    private List<LikeModel> like; 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         name = "UserMusic", 
@@ -37,7 +37,7 @@ public class UserModel implements Serializable{
 
     }
 
-    public UserModel(String id, String email, String password, String username, String mobileNumber, Boolean active, String role, LikeModel like, Set<MusicModel> playlist) {
+    public UserModel(String id, String email, String password, String username, String mobileNumber, Boolean active, String role, List<LikeModel> like, Set<MusicModel> playlist) {
         this.id = id;
         this.email = email;
         this.password = password;

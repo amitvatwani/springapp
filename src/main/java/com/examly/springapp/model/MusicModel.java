@@ -1,14 +1,15 @@
 package com.examly.springapp.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
-import java.util.*;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class MusicModel {
     @Id
@@ -28,6 +29,31 @@ public class MusicModel {
     private LikeModel like;
     
     
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        MusicModel other = (MusicModel) obj;
+        if (user == null) {
+            if (other.user != null)
+                return false;
+        } else if (!user.equals(other.user))
+            return false;
+        return true;
+    }
 
     public MusicModel() {
 

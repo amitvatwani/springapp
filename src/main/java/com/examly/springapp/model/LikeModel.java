@@ -1,24 +1,58 @@
 package com.examly.springapp.model;
-import javax.persistence.JoinColumn;
-import javax.persistence.Entity;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.*;
-import javax.persistence.OneToMany;
-
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType; 
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.GenericGenerator; 
 
 @Entity
 public class LikeModel implements Serializable{
-    
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(generator="uuid1")
     @GenericGenerator(name="uuid1", strategy="uuid2")
     private String Id;
     private Integer noOfLike=0;
-    @OneToMany(mappedBy="like")
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        joinColumns = { @JoinColumn(name = "userid") }, 
+        inverseJoinColumns = { @JoinColumn(name = "likeId") }
+    )
     private List<UserModel> likedUser;
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((likedUser == null) ? 0 : likedUser.hashCode());
+        return result;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        LikeModel other = (LikeModel) obj;
+        if (likedUser == null) {
+            if (other.likedUser != null)
+                return false;
+        } else if (!likedUser.equals(other.likedUser))
+            return false;
+        return true;
+    }
+
+
     public LikeModel(){
         
     }

@@ -38,6 +38,12 @@ public class UserService {
 		user.setActive(true);
 		userRepo.save(user);
 	}
+
+	public void setLoginStatusAsFalse(String id){
+		UserModel user = findById(id);
+		user.setActive(false);
+		userRepo.save(user);
+	}
 	
 	public List<UserModel> getOnlineUsers(){
 		List<UserModel> userList = userRepo.findUserModelByActive(true).orElse(null);

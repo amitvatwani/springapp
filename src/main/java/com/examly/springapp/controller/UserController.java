@@ -19,26 +19,28 @@ public class UserController {
 		this.userService = userService;
 	}
      
-
+    //Get all online users
     @GetMapping("/admin/active")
     public List<UserModel> getOnlineUser(){
         List<UserModel> userList = userService.getOnlineUsers();
         return userList;
     }
 
+    //Get all users
     @GetMapping("/admin")
     public List<UserModel> getAllUsers(){
         List<UserModel> userList = userService.getUsers();
         return userList;
     }
 
+    //find user from db
     @GetMapping("/admin/{id}")
     public UserModel userEditData(@PathVariable(value="id") String id){
         UserModel user = userService.findById(id);
         return user;
     }
 
-
+    //Edit user data
     @PutMapping("/admin/userEdit/{id}")
     public UserModel userUpdate(@RequestBody UserModel user, @PathVariable String id){
         UserModel userM = userService.findById(id);
@@ -49,11 +51,13 @@ public class UserController {
         return userM;
     }
 
+    //Delete user
     @DeleteMapping("/admin/delete/{id}")
     public void userDelete(@PathVariable String id){
         userService.deleteUser(id);
     }
 
+    //Add user in db
     @PostMapping("/admin/addUser")
 	public UserModel addUser(@RequestBody UserModel user){
 		if(userService.findByEmail(user.getEmail()) == null){
@@ -61,6 +65,20 @@ public class UserController {
 			return user;
 		}
 		return null;
+	}
+
+    //Logout user (Setting active as false)
+    @PostMapping("/logout/{id}")
+	public boolean userLogout(@PathVariable String id){
+        UserModel user = userService.findById(id);
+        if(user!=null){
+		    userService.setLoginStatusAsFalse(id);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 	}
 
 }

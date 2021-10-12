@@ -21,8 +21,10 @@ public class UserModel implements Serializable{
     private Boolean active=false;
     private String role;
     
+    //ManyToMany Mapping (Many users can give like to many songs)
     @ManyToMany(mappedBy = "likedUser")
     private List<LikeModel> like; 
+    //ManyToMany Mapping (Many users can add to playlist many songs)
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         name = "UserMusic", 

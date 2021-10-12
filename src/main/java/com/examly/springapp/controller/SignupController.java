@@ -14,11 +14,11 @@ public class SignupController {
 	public SignupController(UserService userService) {
 		this.userService = userService;
 	}
-    
+    //Signup Api
     @PostMapping("/signup")
-	@ResponseStatus(HttpStatus.CREATED)
 	public boolean saveUser(@RequestBody UserModel user){
 		try{
+		//Checking if user is not registered
 		if(userService.findByEmail(user.getEmail()) == null){
 			userService.saveUser(user);
 			return true;

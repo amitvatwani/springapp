@@ -25,14 +25,19 @@ public class CommentController {
         this.musicService = musicService;
         this.userService = userService;
 	} 
+
+    //Add a like for a particular song
     @PostMapping("/like/{id}/{musicId}")
     public LikeModel addLike(@PathVariable(value="id") String id, @PathVariable(value="musicId") String musicId){
         
+        //Searching for user and song in db
         UserModel user = userService.findById(id);
         MusicModel music = musicService.findById(musicId);
         LikeModel like = new LikeModel();
+
         if(music !=null && user !=null){
             
+            //Setting the first like for the song
             if(music.getLike() == null){
 
                 like.setNoOfLike(1);
@@ -43,10 +48,12 @@ public class CommentController {
                 like = music.getLike();   
                 List<UserModel> uList = like.getUserList();
                 
+                //If user has already liked the song
                 if(uList.contains(user))
                 {
                     return null;
                 }
+                //Incrementing like by 1
                 else
                 {
                     like.setNoOfLike(like.getNoOfLike() + 1);
@@ -61,6 +68,7 @@ public class CommentController {
         return like;
     }
 
+    //Remove a like from a particular song
     @DeleteMapping("/like/{id}/{musicId}")
     public LikeModel removeLike(@PathVariable(value="id") String id, @PathVariable(value="musicId") String musicId){
         
@@ -69,15 +77,18 @@ public class CommentController {
         LikeModel like = new LikeModel();
         if(music !=null && user !=null){
             
+            //If the song like count is 0
             if(music.getLike() == null){
 
                 return null;
                 
             }
+            //dercrementing like by 1
             else{
                 like = music.getLike();   
                 List<UserModel> uList = like.getUserList();
                 
+                //If user has liked the song then only he can remove the like
                 if(uList.contains(user))
                 {
                     uList.remove(user);
@@ -97,6 +108,8 @@ public class CommentController {
         return like;
     }
 
+
+    //Getting like count of a particular song
     @GetMapping("/like/{musicId}")
     public Integer getLikeCount(@PathVariable(value="musicId") String id){
         MusicModel music = musicService.findById(id);

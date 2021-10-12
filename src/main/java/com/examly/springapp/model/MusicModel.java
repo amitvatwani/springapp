@@ -21,10 +21,11 @@ public class MusicModel {
     private String musicUrl;
     private String musicAlbum;
     private String musicArtist;
+    //ManyToMany Mapping (Many songs can be added in many user's playlist)
     @ManyToMany(mappedBy = "playlist")
     private List<UserModel> user;
     
-
+    //OneToOne Mapping (One music model follow one like model)
     @OneToOne(cascade=CascadeType.ALL)
     private LikeModel like;
     

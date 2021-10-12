@@ -1,7 +1,7 @@
 package com.examly.springapp.model;
 import java.io.Serializable;
 import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +19,8 @@ public class LikeModel implements Serializable{
     @GenericGenerator(name="uuid1", strategy="uuid2")
     private String Id;
     private Integer noOfLike=0;
+
+    //ManyToMany Mapping (Many users can give like to many songs)
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         joinColumns = { @JoinColumn(name = "userid") }, 
@@ -61,7 +63,6 @@ public class LikeModel implements Serializable{
     public LikeModel(String id, Integer noOfLike, List<UserModel> userList ) {
         Id = id;
         this.noOfLike = noOfLike;
-        this.likedUser = userList;
     }
     public String getId() {
         return Id;
@@ -75,9 +76,10 @@ public class LikeModel implements Serializable{
     public void setNoOfLike(Integer noOfLike) {
         this.noOfLike = noOfLike;
     }
+    @JsonIgnore
     public List<UserModel> getUserList() {
         return likedUser;
-   }
+    }
     public void setUserList(List<UserModel> userList) {
         this.likedUser = userList;
     }

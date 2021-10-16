@@ -1,9 +1,9 @@
 package com.examly.springapp.controller;
 import java.util.List;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.examly.springapp.model.MusicModel;
 import com.examly.springapp.services.MusicService;
-
+import com.examly.springapp.dto.GenericResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MusicController {
     private final MusicService musicService;
     public MusicController(MusicService musicService) {
@@ -28,9 +29,11 @@ public class MusicController {
 
     //Get all songs for admin
     @GetMapping("/admin/music")
-    public List<MusicModel> getAllMusic(){
+    public GenericResponse<List<MusicModel>> getAllMusic(){
         List<MusicModel> musicList = musicService.allMusic();
-        return musicList;
+        GenericResponse<List<MusicModel>> response = new GenericResponse<>();
+        response.setResponse(musicList);
+        return response;
     }
 
     //Get a particular song by id

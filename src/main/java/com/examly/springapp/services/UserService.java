@@ -44,6 +44,12 @@ public class UserService {
 		user.setActive(false);
 		userRepo.save(user);
 	}
+
+	public void setUserRole(String id, String role){
+		UserModel user = findById(id);
+		user.setRole("user");
+		userRepo.save(user);
+	}
 	
 	public List<UserModel> getOnlineUsers(){
 		List<UserModel> userList = userRepo.findUserModelByActive(true).orElse(null);

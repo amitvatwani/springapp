@@ -2,13 +2,15 @@ package com.examly.springapp.controller;
 import com.examly.springapp.model.LoginModel;
 import com.examly.springapp.model.UserModel;
 import com.examly.springapp.services.UserService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
-
+import java.util.HashMap;
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class LoginController {
     private final UserService userService;
     public LoginController(UserService userService) {
@@ -20,7 +22,9 @@ public class LoginController {
         try{  
         //If user is not registered
 		if(userService.findByEmail(loginUser.getEmail())==null){
-            return new ResponseEntity("User does not exists", HttpStatus.BAD_REQUEST);
+            HashMap<String, String> map1 = new HashMap<String, String>();
+            map1.put("message", "User does not exists");
+            return new ResponseEntity(map1, HttpStatus.BAD_REQUEST);
         }
         else{
             //Processing Login Request
@@ -40,7 +44,9 @@ public class LoginController {
 
             //If entered password is incorrect
             else{
-                return new ResponseEntity("Incorrect Password", HttpStatus.BAD_REQUEST);
+                HashMap<String, String> map1 = new HashMap<String, String>();
+                map1.put("message", "Incorrect Password");
+                return new ResponseEntity(map1, HttpStatus.BAD_REQUEST);
             }
         }
     }

@@ -6,6 +6,8 @@ import javax.persistence.JoinColumn;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.CascadeType;
+import org.springframework.beans.factory.annotation.Value;
+
 @Entity
 public class UserModel implements Serializable{
     private static final long serialVersionUID = 1L;

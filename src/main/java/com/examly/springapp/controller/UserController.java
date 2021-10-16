@@ -1,9 +1,9 @@
 package com.examly.springapp.controller;
 import java.util.List;
-
+import com.examly.springapp.dto.GenericResponse;
 import com.examly.springapp.model.UserModel;
 import com.examly.springapp.services.UserService;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     private final UserService userService;
 
@@ -59,12 +61,14 @@ public class UserController {
 
     //Add user in db
     @PostMapping("/admin/addUser")
-	public UserModel addUser(@RequestBody UserModel user){
+	public GenericResponse<Boolean> addUser(@RequestBody UserModel user){
+        GenericResponse<Boolean> response = new GenericResponse<>();
 		if(userService.findByEmail(user.getEmail()) == null){
 			userService.saveUser(user);
-			return user;
+			response.setResponse(true);
 		}
-		return null;
+        response.setResponse(false);
+		return response;
 	}
 
     //Logout user (Setting active as false)

@@ -1,7 +1,7 @@
 package com.examly.springapp.controller;
 import java.util.Arrays;
 import java.util.List;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.examly.springapp.model.LikeModel;
 import com.examly.springapp.model.MusicModel;
 import com.examly.springapp.model.UserModel;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CommentController {
     
     private final MusicService musicService;

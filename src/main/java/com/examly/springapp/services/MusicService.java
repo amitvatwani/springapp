@@ -24,7 +24,10 @@ public class MusicService {
 		return newMusic;
     }
 
-    public List<MusicModel> allMusic(){
+    public List<MusicModel> allMusic(String keyword){
+		if(keyword!=null){
+			return musicRepo.findByMusicNameContainingIgnoreCase(keyword);
+		}
         List<MusicModel> musicList = musicRepo.findAll();
 		return musicList;
     }

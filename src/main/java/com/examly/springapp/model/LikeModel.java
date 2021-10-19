@@ -64,9 +64,6 @@ public class LikeModel implements Serializable{
         Id = id;
         this.noOfLike = noOfLike;
     }
-    public String getId() {
-        return Id;
-    }
     public void setId(String id) {
         Id = id;
     }

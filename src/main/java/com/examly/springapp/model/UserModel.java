@@ -22,6 +22,8 @@ public class UserModel implements Serializable{
     private String mobileNumber;
     private Boolean active=false;
     private String role;
+    private String question;
+    private String answer;
     
     //ManyToMany Mapping (Many users can give like to many songs)
     @ManyToMany(mappedBy = "likedUser")
